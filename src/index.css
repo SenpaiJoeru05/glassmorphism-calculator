@@ -107,6 +107,29 @@ kbd {
   box-shadow: 0 2px 0 #0003;
 }
 
+.credit {
+  margin: 26px 0 0;
+  text-align: center;
+  color: #5f6884;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.credit a {
+  color: #9da6c2;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.credit a:hover { color: var(--violet); }
+
+.credit a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media (hover: none) {
   .keyboard-hint { visibility: hidden; }
 }
