@@ -54,6 +54,10 @@ export default function App() {
           onClear={() => dispatch({ type: 'clearHistory' })}
         />
       )}
+      <p className="credit">
+        Built by{' '}
+        <a href="https://github.com/SenpaiJoeru05" target="_blank" rel="noreferrer">Joel Rayton</a>
+      </p>
       <Toast notice={state.notice} />
     </main>
   )
