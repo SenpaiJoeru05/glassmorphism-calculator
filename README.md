@@ -1,32 +1,56 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+# glass. — Calculator
 
-Currently, two official plugins are available:
+A glassmorphism calculator built with **React 19**, **TypeScript** and **Vite**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**[Live demo →](https://senpaijoeru05.github.io/glassmorphism-calculator/)**
 
-## React Compiler
+![Glass calculator screenshot](docs/screenshot.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+</div>
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **Glassmorphism UI.** Layered translucent panels, soft inner highlights, breathing background light and a subtle 3D parallax tilt that follows the pointer.
+- **Chained calculations.** `2 + 3 × 4` evaluates left to right like a desk calculator. Pressing a second operator swaps it.
+- **Live formatting.** Thousands are grouped while you type (`1,234.50`), and very large or tiny results switch to exponent notation.
+- **History.** The last 8 results are saved in `localStorage`. Click one to reuse it.
+- **Full keyboard support.** Digits, `+ - * /`, `Enter`, `Backspace`, `Esc` and `%`. The matching on-screen key lights up as you type.
+- **Accessible.** Real `<button>`s with labels, a live region for the result, visible focus rings, and no motion when the OS asks for reduced motion.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Tech
+
+| | |
+|---|---|
+| UI | React 19, plain CSS (one stylesheet per component) |
+| Language | TypeScript (strict) |
+| Build | Vite |
+| Tests | Vitest |
+| Lint | oxlint |
+| CI / Deploy | GitHub Actions → GitHub Pages |
+
+## How it's built
+
+All calculator behaviour lives in a **pure reducer** ([`src/lib/calculator.ts`](src/lib/calculator.ts)), separate from React. Components only render state and dispatch actions. That keeps the logic easy to test without a browser. Every rule (chaining, operator swapping, divide-by-zero, percent, backspace, history) has its own unit test in [`calculator.test.ts`](src/lib/calculator.test.ts).
+
+```
+src/
+├── lib/            calculator reducer, number formatting, history storage (+ tests)
+├── hooks/          useKeyboard (key → action), useTilt (pointer parallax)
+└── components/     Topbar, Calculator, Display, Keypad, HistoryPanel, Toast
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Run it locally
+
+```bash
+npm install
+npm run dev        # start the dev server
+npm test           # run the unit tests
+npm run lint       # lint
+npm run build      # type-check and build for production
+```
+
+## Origin
+
+This started as a single self-contained HTML file. I rebuilt it in React with TypeScript to separate the logic from the view, add tests, and make it easy to extend.
